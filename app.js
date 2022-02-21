@@ -14,8 +14,9 @@ const connectDB = require("./db/connect");
 const authRouter = require("./routes/authRoutes");
 
 app.use(morgan("tiny"));
+const cookieParser = require("cookie-parser");
 app.use(express.json());
-
+app.use(cookieParser(process.env.JWT_SECRET));
 app.get("/", (req, res) => {
   res.send("ok");
 });
