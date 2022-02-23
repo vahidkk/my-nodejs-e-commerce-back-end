@@ -3,15 +3,16 @@ require("express-async-errors");
 const morgan = require("morgan");
 const express = require("express");
 const app = express();
-
-// error handler
-const notFoundMiddleware = require("./middleware/not-found");
-const errorHandlerMiddleware = require("./middleware/error-handler");
 //connect  db
 const connectDB = require("./db/connect");
 
 // routers:
 const authRouter = require("./routes/authRoutes");
+const userRouter = require("./routes/userRoutes");
+
+// error handler
+const notFoundMiddleware = require("./middleware/not-found");
+const errorHandlerMiddleware = require("./middleware/error-handler");
 
 app.use(morgan("tiny"));
 const cookieParser = require("cookie-parser");
@@ -22,6 +23,7 @@ app.get("/", (req, res) => {
 });
 // routes
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/users", userRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
