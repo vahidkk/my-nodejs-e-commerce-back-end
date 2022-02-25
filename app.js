@@ -3,6 +3,7 @@ require("express-async-errors");
 const morgan = require("morgan");
 const express = require("express");
 const app = express();
+const fileUpload = require("express-fileupload");
 //connect  db
 const connectDB = require("./db/connect");
 
@@ -19,6 +20,8 @@ app.use(morgan("tiny"));
 const cookieParser = require("cookie-parser");
 app.use(express.json());
 app.use(cookieParser(process.env.JWT_SECRET));
+app.use(express.static("./public"));
+app.use(fileUpload());
 app.get("/", (req, res) => {
   res.send("ok");
 });
