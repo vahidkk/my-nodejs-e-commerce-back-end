@@ -31,6 +31,7 @@ app.use(
 );
 app.use(helmet());
 app.use(xss());
+const cors = require("cors");
 app.use(mongoSanitize());
 
 // app.use(morgan("tiny"));
