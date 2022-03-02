@@ -7,6 +7,7 @@ const fileUpload = require("express-fileupload");
 const rateLimiter = require("express-rate-limit");
 const helmet = require("helmet");
 const xss = require("xss-clean");
+const cors = require("cors");
 const mongoSanitize = require("express-mongo-sanitize");
 //connect  db
 const connectDB = require("./db/connect");
@@ -31,7 +32,7 @@ app.use(
 );
 app.use(helmet());
 app.use(xss());
-const cors = require("cors");
+app.use(cors());
 app.use(mongoSanitize());
 
 // app.use(morgan("tiny"));
