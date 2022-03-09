@@ -4,6 +4,13 @@ const morgan = require("morgan");
 const express = require("express");
 const app = express();
 const fileUpload = require("express-fileupload");
+const cloudinary = require("cloudinary").v2;
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRET,
+});
+
 const rateLimiter = require("express-rate-limit");
 const helmet = require("helmet");
 const xss = require("xss-clean");
@@ -40,7 +47,7 @@ const cookieParser = require("cookie-parser");
 app.use(express.json());
 app.use(cookieParser(process.env.JWT_SECRET));
 app.use(express.static("./public"));
-app.use(fileUpload());
+app.use(fileUpload({ useTempFiles: true }));
 app.get("/", (req, res) => {
   res.send("ok");
 });
