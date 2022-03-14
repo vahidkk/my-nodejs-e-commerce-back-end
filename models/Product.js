@@ -19,8 +19,8 @@ const ProductSchema = new mongoose.Schema(
       maxlength: [1000, "Description can not be more than 1000 characters"],
     },
     image: {
-      type: String,
-      default: "/uploads/sample.png",
+      type: [String],
+      default: ["/sample.png"],
     },
     category: {
       type: String,
