@@ -30,12 +30,13 @@ const createOrder = async (req, res) => {
         `No product with id : ${item.product}`
       );
     }
-    const { name, price, image, _id } = dbProduct;
+    const { name, price, image, _id, color } = dbProduct;
     const singleOrderItem = {
       amount: item.amount,
       name,
       price,
       image,
+      color,
       product: _id,
     };
     // add item to order
