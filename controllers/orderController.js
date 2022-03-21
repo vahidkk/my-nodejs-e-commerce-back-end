@@ -84,7 +84,7 @@ const getCurrentUserOrders = async (req, res) => {
 };
 const updateOrder = async (req, res) => {
   const { id: orderId } = req.params;
-  const { paymentIntentId } = req.body;
+  const { paymentIntentId, status } = req.body;
 
   const order = await Order.findOne({ _id: orderId });
   if (!order) {
@@ -93,7 +93,7 @@ const updateOrder = async (req, res) => {
   checkPermissions(req.user, order.user);
 
   order.paymentIntentId = paymentIntentId;
-  order.status = "paid";
+  order.status = status;
   await order.save();
 
   res.status(StatusCodes.OK).json({ order });
