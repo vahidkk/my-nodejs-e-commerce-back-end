@@ -45,10 +45,11 @@ const ProductSchema = new mongoose.Schema(
         "Personal Computers",
         "Software",
         "Sports",
-        "Tools & Home Improvement",
+        "Tools",
         "Toys & Games",
         "Video Games",
         "Watches",
+        "Stationery ",
       ],
     },
     company: {
