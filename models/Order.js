@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const CustomError = require("../errors");
 
 const SingleOrderItemSchema = mongoose.Schema({
   name: { type: String, required: true },
@@ -52,5 +53,29 @@ const OrderSchema = mongoose.Schema(
   },
   { timestamps: true }
 );
+
+OrderSchema.post("save", async function (next) {
+  if (this.status === "paid") {
+    for (const i of this.orderItems) {
+      await this.model("Product")
+        .findOne({ _id: i.product.toString() }, async function (err, item) {
+          item.inventory = item.inventory - i.amount;
+
+          try {
+            if (item.inventory < 0) {
+              throw new CustomError.BadRequestError(
+                "This number of products is not available in our warehouse"
+              );
+            } else {
+              await item.save();
+            }
+          } catch (err) {
+            console.log(err);
+          }
+        })
+        .clone();
+    }
+  }
+});
 
 module.exports = mongoose.model("Order", OrderSchema);
